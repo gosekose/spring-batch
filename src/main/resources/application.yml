@@ -1,25 +1,61 @@
 spring:
+  profiles:
+    active: mysql
+
+---
+spring:
+  config:
+    activate:
+      on-profile: local
+
   datasource:
-    url: jdbc:h2:tcp://localhost/~/h2/h2db/datajpa
-    username: sa
-    password:
-    driver-class-name: org.h2.Driver
+    url: jdbc:mysql://localhost:3308/springbatch
+    username: root
+    password: abc
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.mysql.cj.jdbc.MysqlDataSource
 
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-#        show_sql: true
-        format_sql: true
-        use_sql_comments: true
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql
 
-  data:
-    web:
-      pageable:
-        default-page-size: 10
-        max-page-size: 2000
+  datasource:
+    url: jdbc:mysql://localhost:3308/springbatch?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: abc
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.mysql.cj.jdbc.MysqlDataSource
 
+  batch:
+    jdbc:
+      initialize-schema: always
+
+#  batch:
+#    jdbc:
+#      initialize-schema=always
+
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+##        show_sql: true
+#        format_sql: true
+#        use_sql_comments: true
+#
+#  data:
+#    web:
+#      pageable:
+#        default-page-size: 10
+#        max-page-size: 2000
+#
 logging.level:
   org.hibernate.SQL: debug
 # org.hibernate.type: trace
+
+
+
+
